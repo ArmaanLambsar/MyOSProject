@@ -1,0 +1,1 @@
+Welcome, is is a OS based off of the 2 Main Console Brands, Playstation and XBOX. This is a OS Project that is made from a tutorial from stardance. This Version is on Step 2 so it's not complete. I used AI to make the OS Look Much cleaner. Heres the link to do this yourself: https://jams.hackclub.com/batch/webOS
