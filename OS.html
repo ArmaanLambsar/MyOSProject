@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Console OS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-image: url('./BG.webp');
+      background-size: cover;
+      background-attachment: fixed;
+      min-height: 100vh;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      padding-top: 70px;
+      color: #222;
+    }
+
+    .status-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      backdrop-filter: blur(6px);
+      background-color: rgba(0, 0, 0, 0.28);
+      color: #fff;
+      font-weight: 600;
+      z-index: 100;
+    }
+
+    .status-bar p {
+      margin: 0;
+      font-size: 14px;
+    }
+
+    .status-bar::before {
+      content: '';
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(90deg,#ff8a00,#e52e71);
+      margin-right: 10px;
+      box-shadow: 0 4px 12px rgba(229,46,113,0.18);
+    }
+
+    .box {
+      max-width: 760px;
+      margin: 48px auto;
+      padding: 36px 36px 28px;
+      background: rgba(255, 255, 255, 0.94);
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(6, 24, 44, 0.12);
+      text-align: center;
+    }
+
+    .box h1 {
+      font-size: 30px;
+      margin-bottom: 6px;
+      letter-spacing: 0.6px;
+      margin-top: 4px;
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+
+    .box h2 {
+      font-size: 18px;
+      color: #444;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .box h3 {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 18px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .box p {
+      color: #333;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .box img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      display: block;
+      margin: 24px auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .links-section {
+      display: flex;
+      gap: 16px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .links-section a {
+      padding: 10px 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .links-section a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <div class="status-bar">
+    <p id="user-time"></p>
+  </div>
+
+  <div class="box">
+    <h1>Welcome to Console OS</h1>
+    <h2>Introduction</h2>
+    <h3>Hello — you made it to Console OS! This demo provides two popular console experiences.</h3>
+    <p>What's your favorite console?</p>
+    <img src="./Image.webp" alt="Game controller" />
+    
+    <div class="links-section">
+      <a href="https://direct.playstation.com/en-us/hardware/ps5?emcid=pa-co-520653&gclid=f2b395f06b251b8d762effde68e85ba6&gclsrc=3p.ds&msclkid=f2b395f06b251b8d762effde68e85ba6/" target="_blank" rel="noopener">PlayStation Website</a>
+      <a href="https://www.xbox.com/en-US/?msockid=0da9affa04b3680c3a5eb93705316913/" target="_blank" rel="noopener">Xbox Website</a>
+    </div>
+  </div>
+
+  <script>
+    function updateUserTime() {
+      const now = new Date();
+      const formatted = now.toLocaleString([], {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+      });
+      document.getElementById('user-time').textContent = formatted;
+    }
+
+    updateUserTime();
+    setInterval(updateUserTime, 1000);
+  </script>
+</body>
+</html>
