@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Console OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -11,14 +14,42 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --accent-1: #667eea;
+      --accent-2: #764ba2;
+      --glass: rgba(255,255,255,0.6);
+      --text: #0f172a;
+      --shadow: 0 12px 40px rgba(6,24,44,0.08);
+    }
+
+    [data-theme="dark"] {
+      --bg: linear-gradient(180deg,#0b1020,#081427);
+      --card: rgba(10,14,24,0.7);
+      --muted: #9aa6bf;
+      --glass: rgba(255,255,255,0.03);
+      --text: #e6eef8;
+      --shadow: 0 12px 40px rgba(2,6,23,0.6);
+    }
+
+    html, body {
+      height: 100%;
+    }
+
     body {
+      background: var(--bg);
       background-image: url('./BG.png');
       background-size: cover;
       background-attachment: fixed;
       min-height: 100vh;
-      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       padding-top: 70px;
-      color: #222;
+      color: var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition: background .3s, color .3s;
     }
 
     .status-bar {
@@ -27,7 +58,7 @@
       left: 0;
       width: 100%;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       padding: 10px 20px;
       backdrop-filter: blur(6px);
@@ -54,21 +85,23 @@
     }
 
     .box {
-      max-width: 760px;
+      max-width: 1100px;
       margin: 48px auto;
-      padding: 36px 36px 28px;
-      background: rgba(255, 255, 255, 0.94);
+      padding: 28px;
+      background: var(--card);
       border-radius: 14px;
-      box-shadow: 0 12px 40px rgba(6, 24, 44, 0.12);
-      text-align: center;
+      box-shadow: var(--shadow);
+      text-align: left;
+      overflow: hidden;
     }
 
     .box h1 {
-      font-size: 30px;
+      font-size: 34px;
       margin-bottom: 6px;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.2px;
       margin-top: 4px;
-      background: linear-gradient(90deg, #667eea, #764ba2);
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -96,14 +129,32 @@
       margin-bottom: 16px;
     }
 
-    .box img {
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr; 
+      gap: 20px;
+      align-items: center;
+    }
+
+    .hero-media {
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .hero-media img {
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       height: auto;
       display: block;
-      margin: 24px auto;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(2,6,23,0.2);
+    }
+
+    @media(min-width:880px){
+      .hero{ grid-template-columns: 1fr 420px; }
+      .box { padding: 36px; }
+      .box h1 { font-size: 42px; }
     }
 
     .links-section {
@@ -129,23 +180,58 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
     }
+
+    .btn-ghost {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .toggle {
+      background: linear-gradient(90deg,var(--accent-1),var(--accent-2));
+      border: none;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: white;
+      cursor: pointer;
+      font-weight:600;
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+    }
   </style>
 </head>
 <body>
   <div class="status-bar">
     <p id="user-time"></p>
+    <div>
+      <button id="theme-toggle" class="toggle">Toggle Theme</button>
+      <button id="open-tab" class="toggle" style="margin-left:8px;">Open Tab</button>
+      <button id="close-tab" class="toggle" style="margin-left:8px;opacity:0.6;" disabled>Close Tab</button>
+    </div>
   </div>
 
   <div class="box">
-    <h1>Welcome to Console OS</h1>
-    <h2>Introduction</h2>
-    <h3>Hello — you made it to Console OS! This demo provides two popular console experiences.</h3>
-    <p>What's your favorite console?</p>
-    <img src="./cover.png" alt="Game controller" />
-    
-    <div class="links-section">
-      <a href="https://direct.playstation.com/en-us/hardware/ps5?emcid=pa-co-520653&gclid=f2b395f06b251b8d762effde68e85ba6&gclsrc=3p.ds&msclkid=f2b395f06b251b8d762effde68e85ba6/" target="_blank" rel="noopener">PlayStation Website</a>
-      <a href="https://www.xbox.com/en-US/?msockid=0da9affa04b3680c3a5eb93705316913/" target="_blank" rel="noopener">Xbox Website</a>
+    <div class="hero">
+      <div>
+        <h1>Welcome to Console OS</h1>
+        <h2>Introduction</h2>
+        <h3>Hello — you made it to Console OS! This demo provides two popular console experiences.</h3>
+        <p>What's your favorite console? Pick a link below to discover more.</p>
+
+        <div class="links-section">
+          <a href="https://direct.playstation.com/en-us/hardware/ps5" target="_blank" rel="noopener">PlayStation</a>
+          <a href="https://www.xbox.com/en-US/" target="_blank" rel="noopener">Xbox</a>
+          <a href="#" class="btn-ghost" id="learn-more">Learn More</a>
+        </div>
+      </div>
+
+      <div class="hero-media">
+        <img src="./cover.png" alt="Game controller" />
+      </div>
     </div>
   </div>
 
@@ -166,6 +252,82 @@
 
     updateUserTime();
     setInterval(updateUserTime, 1000);
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const stored = localStorage.getItem('theme');
+    if(stored === 'dark') document.documentElement.setAttribute('data-theme','dark');
+
+    themeToggle.addEventListener('click', ()=>{
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if(isDark){
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme','light');
+      } else {
+        document.documentElement.setAttribute('data-theme','dark');
+        localStorage.setItem('theme','dark');
+      }
+    });
+
+    // Open / Close tab feature
+    let openedTab = null;
+    const openBtn = document.getElementById('open-tab');
+    const closeBtn = document.getElementById('close-tab');
+
+    function updateTabButtons(){
+      const isOpen = openedTab && !openedTab.closed;
+      closeBtn.disabled = !isOpen;
+      closeBtn.style.opacity = isOpen ? '1' : '0.6';
+    }
+
+    openBtn.addEventListener('click', ()=>{
+      try{
+        if(openedTab && !openedTab.closed){
+          openedTab.focus();
+          return;
+        }
+        openedTab = window.open('about:blank','ConsoleOSDemo');
+        if(openedTab){
+          openedTab.document.title = 'Console OS - Demo Tab';
+          openedTab.document.body.style.fontFamily = 'Inter, Arial, sans-serif';
+          openedTab.document.body.style.display = 'flex';
+          openedTab.document.body.style.alignItems = 'center';
+          openedTab.document.body.style.justifyContent = 'center';
+          openedTab.document.body.style.height = '100vh';
+          openedTab.document.body.innerHTML = `<div style="text-align:center;"><h1 style="font-weight:700;color:#333">Console OS Demo Tab</h1><p style="color:#555">This tab was opened by the main page. Close it using the Close Tab button.</p></div>`;
+        } else {
+          alert('Popup blocked. Allow popups for this site to use the open tab feature.');
+        }
+      }catch(e){
+        console.error('Open tab failed',e);
+      }
+      updateTabButtons();
+    });
+
+    closeBtn.addEventListener('click', ()=>{
+      try{
+        if(openedTab && !openedTab.closed){
+          openedTab.close();
+        }
+        openedTab = null;
+      }catch(e){
+        console.error('Close tab failed',e);
+      }
+      updateTabButtons();
+    });
+
+    // Periodically check if the tab was closed manually
+    setInterval(()=>{
+      if(openedTab && openedTab.closed){
+        openedTab = null;
+        updateTabButtons();
+      }
+    },1000);
+
+    // Small interaction
+    document.getElementById('learn-more').addEventListener('click', (e)=>{
+      e.preventDefault();
+      alert('Console OS — a small demo. Replace this with your project links.');
+    });
   </script>
 </body>
 </html>
